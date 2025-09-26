@@ -24,7 +24,8 @@
       <ErrorMessage name="phone" class="error-feedback" />
     </div>
 
-    <div class="form-group form-check">
+    <!-- Favorite: ẩn/hiện theo prop -->
+    <div class="form-group form-check" v-if="showFavorite">
       <Field name="favorite" type="checkbox" class="form-check-input" />
       <label for="favorite" class="form-check-label">
         <strong>Liên hệ yêu thích</strong>
@@ -33,6 +34,7 @@
 
     <div class="form-group">
       <button class="btn btn-primary">Lưu</button>
+
       <button
         v-if="contactLocal._id"
         type="button"
@@ -41,7 +43,14 @@
       >
         Xóa
       </button>
-      <button type="button" class="ml-2 btn btn-secondary" @click="Cancel">
+
+      <!-- Cancel: ẩn/hiện theo prop -->
+      <button
+        type="button"
+        class="ml-2 btn btn-secondary"
+        v-if="showCancel"
+        @click="Cancel"
+      >
         Thoát
       </button>
     </div>
@@ -57,6 +66,8 @@ export default {
   emits: ["submit:contact", "delete:contact"],
   props: {
     contact: { type: Object, required: true },
+    showFavorite: { type: Boolean, default: true },
+    showCancel: { type: Boolean, default: true },
   },
   data() {
     const contactFormSchema = yup.object().shape({
